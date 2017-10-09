@@ -1,16 +1,18 @@
 import * as async from "async";
+import {ErrorCallback} from "async";
 import * as os from "os";
 import * as ts from "typescript";
 
-import { Transform, TransformContext } from "../api";
-import { Configuration } from "../shared/configuration";
-import { Project } from "../shared/project";
-import { BundleItem } from "./bundle-item";
-import { Queued } from "./queued";
+import {Transform, TransformContext} from "../api";
+import {Configuration} from "../shared/configuration";
+import {Project} from "../shared/project";
+import {BundleItem} from "./bundle-item";
+import {Queued} from "./queued";
 
 export class Transformer {
 
-    constructor(private config: Configuration, private project: Project) { }
+    constructor(private config: Configuration, private project: Project) {
+    }
 
     public applyTsTransforms(bundleQueue: Queued[], onTransformsApplied: { (): void }): void {
 
