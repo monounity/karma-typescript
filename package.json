@@ -50,6 +50,7 @@
     "build:ci": "tsc --noEmit --rootDir ./src",
     "build:watch": "tsc -w --rootDir ./src",
     "lint": "eslint ./lib/*.js && tslint --project tsconfig.json",
+    "pretest": "npm run build && npm run build:ci",
     "test": "./ci/run.sh",
     "test:unix": "./ci/install.sh && ./ci/run.sh",
     "test:windows": ".\\ci\\install.bat & .\\ci\\run.bat",
