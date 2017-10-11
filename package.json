@@ -54,6 +54,7 @@
     "test": "./ci/run.sh",
     "test:unix": "./ci/install.sh && ./ci/run.sh",
     "test:windows": ".\\ci\\install.bat & .\\ci\\run.bat",
+    "pretest:unit": "npm run build && npm run build:ci",
     "test:unit": "tape dist/**/*.spec.js | faucet"
   },
   "dependencies": {
