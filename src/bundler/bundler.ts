@@ -23,6 +23,8 @@ import { Resolver } from "./resolve/resolver";
 import { Transformer } from "./transformer";
 import { Validator } from "./validator";
 
+import "../client/commonjs";
+
 export class Bundler {
 
     private readonly BUNDLE_DELAY = 500;
@@ -59,13 +61,14 @@ export class Bundler {
 
         files.push({
             included: true,
-            pattern: path.join(__dirname, "../../src/client/commonjs.js"),
+            pattern: path.join(__dirname, "../../dist/client/commonjs.js"),
             served: true,
             watched: false
         });
     }
 
     public bundle(file: File, emitOutput: EmitOutput, callback: BundleCallback) {
+        // throw new Error("lkjhfjgfd");
         this.bundleQueue.push({ callback, emitOutput, file });
         this.bundleQueuedModulesDeferred();
     }

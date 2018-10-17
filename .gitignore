@@ -1,7 +1,7 @@
-dist
+*.tgz
 bower_components
 coverage
+dist
 node_modules
 npm-debug.log
 tmp
-.idea
