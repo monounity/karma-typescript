@@ -59,7 +59,7 @@
     "test:unit": "tape dist/**/*.spec.js | faucet",
     "ci": "npm run lint && npm test",
     "dev": "npm run lint && npm run build && npm run setup:kt && npm test",
-    "setup": "npm i && npm run build && npm run setup:examples && npm run setup:tests",
+    "setup": "npm i && npm run build && npm run setup:examples && npm run setup:tests && git clean -f",
     "setup:examples": "npm run setup:examples:angular2 && npm run setup:examples:angularjs && npm run setup:examples:mocha && npm run setup:examples:typescript-1.6.2 && npm run setup:examples:typescript-1.6.2 && npm run setup:examples:typescript-latest",
     "setup:tests": "npm run setup:tests:integration-1.8.10 && npm run setup:tests:integration-latest",
     "setup:kt": "npm run setup:kt:examples && npm run setup:kt:tests",
