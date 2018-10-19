@@ -68,7 +68,6 @@ export class Bundler {
     }
 
     public bundle(file: File, emitOutput: EmitOutput, callback: BundleCallback) {
-        // throw new Error("lkjhfjgfd");
         this.bundleQueue.push({ callback, emitOutput, file });
         this.bundleQueuedModulesDeferred();
     }
