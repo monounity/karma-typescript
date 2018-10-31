@@ -68,7 +68,7 @@ test("source-reader should create an AST", (t) => {
     const bundleItem = new BundleItem("dummy", "dummy.js");
 
     sourceReader.read(bundleItem, () => {
-        t.notEqual(bundleItem.ast.body, undefined);
+        t.notEqual(bundleItem.ast, undefined);
     });
 });
 
@@ -79,11 +79,7 @@ test("source-reader should create an empty dummy AST for non-script files (css, 
     const bundleItem = new BundleItem("style", "style.css");
 
     sourceReader.read(bundleItem, () => {
-        t.deepEqual(bundleItem.ast, {
-            body: undefined,
-            sourceType: "script",
-            type: "Program"
-        });
+        t.equal(bundleItem.ast, undefined);
     });
 });
 
@@ -94,11 +90,7 @@ test("source-reader should create an empty dummy AST for modules specified in th
     const bundleItem = new BundleItem("noparse", "noparse.js");
 
     sourceReader.read(bundleItem, () => {
-        t.deepEqual(bundleItem.ast, {
-            body: undefined,
-            sourceType: "script",
-            type: "Program"
-        });
+        t.equal(bundleItem.ast, undefined);
     });
 });
 

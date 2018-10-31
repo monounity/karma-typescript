@@ -101,7 +101,7 @@ export class Transformer {
                         bundleItem.ast = context.js.ast;
                         bundleItem.source = context.source;
                         bundleItem.transformedScript = result.transformedScript;
-                        if (result.transformedScript && bundleItem.ast && bundleItem.ast.body === undefined) {
+                        if (result.transformedScript && bundleItem.ast) {
                             bundleItem.ast = acorn.parse(context.source, this.config.bundlerOptions.acornOptions);
                         }
                     }

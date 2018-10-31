@@ -18,7 +18,7 @@ import { Queued } from "./queued";
 export class DependencyWalker {
 
     private requireRegexp = /\brequire\b/;
-    private walk = require("acorn/dist/walk");
+    private walk = require("acorn-walk");
 
     constructor(private log: Logger) {}
 
@@ -91,7 +91,7 @@ export class DependencyWalker {
             }
         };
 
-        if (bundleItem.ast.body) {
+        if (bundleItem.ast) {
             this.walk.recursive(bundleItem.ast, null, {
                 Expression: visitNode,
                 Statement: visitNode
