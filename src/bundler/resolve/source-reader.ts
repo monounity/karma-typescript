@@ -15,7 +15,7 @@ export class SourceReader {
                 private log: Logger,
                 private transformer: Transformer) { }
 
-    public read(bundleItem: BundleItem, onSourceRead: { (): void }) {
+    public read(bundleItem: BundleItem, onSourceRead: () => void) {
 
         this.readFile(bundleItem, (source: string) => {
 
@@ -29,7 +29,7 @@ export class SourceReader {
         });
     }
 
-    private readFile(bundleItem: BundleItem, onSourceRead: { (source: string): void }) {
+    private readFile(bundleItem: BundleItem, onSourceRead: (source: string) => void) {
 
         if (this.config.bundlerOptions.ignore.indexOf(bundleItem.moduleName) !== -1) {
             onSourceRead("module.exports={};");

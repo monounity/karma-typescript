@@ -160,8 +160,8 @@
     "mock-require": "^3.0.2",
     "puppeteer": "^1.1.1",
     "tape": "^4.6.3",
-    "tslint": "^4.4.2",
-    "tslint-eslint-rules": "^3.3.0",
+    "tslint": "^5.11.0",
+    "tslint-eslint-rules": "^5.4.0",
     "typescript": "latest"
   },
   "peerDependencies": {

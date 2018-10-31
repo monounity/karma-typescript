@@ -39,9 +39,7 @@ export interface TransformInitializeLogOptions {
     level: string;
 }
 
-export interface TransformInitialize {
-    (log: TransformInitializeLogOptions): void;
-}
+export type TransformInitialize = (log: TransformInitializeLogOptions) => void;
 
 export interface Transform {
     (context: TransformContext, callback: TransformCallback): void;
