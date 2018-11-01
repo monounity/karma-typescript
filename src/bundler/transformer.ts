@@ -83,7 +83,7 @@ export class Transformer {
             config: this.config,
             filename: bundleItem.filename,
             js: {
-                ast: bundleItem.ast
+                ast: bundleItem.ast || { end: 0, start: 0, type: "" }
             },
             module: bundleItem.moduleName,
             source: bundleItem.source
