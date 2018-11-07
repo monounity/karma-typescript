@@ -1,10 +1,7 @@
 #/bin/sh
 
-echo "Cleaning dist"
-rm -rf dist/
-
-echo "Cleaning node_modules/"
-rm -rf node_modules/
+echo "Cleaning core project"
+rm -rf dist/ node_modules/ *.tgz
 
 echo "Cleaning examples/angular2/"
 rm -rf examples/angular2/coverage/ examples/angular2/node_modules/
@@ -29,4 +26,17 @@ rm -rf tests/integration-1.8.10/coverage/ tests/integration-1.8.10/node_modules/
 
 echo "Cleaning tests/integration-latest/"
 rm -rf tests/integration-latest/coverage/ tests/integration-latest/node_modules/
+
+echo "Cleaning transforms/angular/"
+rm -rf transforms/angular/coverage/ transforms/angular/dist transforms/angular/node_modules/ transforms/angular/*.tgz
+
+echo "Cleaning transforms/cssmodules/"
+rm -rf transforms/cssmodules/coverage/ transforms/cssmodules/dist transforms/cssmodules/node_modules/ transforms/cssmodules/*.tgz
+
+echo "Cleaning transforms/es6/"
+rm -rf transforms/es6/coverage/ transforms/es6/dist transforms/es6/node_modules/ transforms/es6/*.tgz
+
+echo "Cleaning transforms/postcss/"
+rm -rf transforms/postcss/coverage/ transforms/postcss/dist transforms/postcss/node_modules/ transforms/postcss/*.tgz
+
 echo "Done"

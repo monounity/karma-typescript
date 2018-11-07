@@ -11,5 +11,6 @@ obliterate.sh
 src
 tests
 tmp
+transforms
 tsconfig.json
 tslint.json

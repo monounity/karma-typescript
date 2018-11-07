@@ -27,7 +27,7 @@ and `styleUrls` properties of a component.
 ### Using karma-typescript-angular2-transform:
 
 This project is configured to use the plugin
-[karma-typescript-angular2-transform](https://github.com/monounity/karma-typescript-angular2-transform)
+[karma-typescript-angular2-transform](https://github.com/monounity/karma-typescript/transforms/angular)
 which rewrites relative urls to absolute urls on the fly in the bundling step before running the tests.
 This covers most scenarios including bundling for production with `webpack`.
 
