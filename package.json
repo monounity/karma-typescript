@@ -54,7 +54,12 @@
   "scripts": {
     "ci": "npm run lint && npm test",
     "dev": "npm run lint && npm run build && npm run setup:kt && npm test",
-    "lint": "tslint --project tsconfig.json",
+    "lint": "tslint --project tsconfig.json && npm run lint:transforms",
+    "lint:transforms": "npm run lint:transforms:angular && npm run lint:transforms:cssmodules && npm run lint:transforms:es6 && npm run lint:transforms:postcss",
+    "lint:transforms:angular": "npm --prefix transforms/angular run lint",
+    "lint:transforms:cssmodules": "npm --prefix transforms/cssmodules run lint",
+    "lint:transforms:es6": "npm --prefix transforms/es6 run lint",
+    "lint:transforms:postcss": "npm --prefix transforms/postcss run lint",
     "build": "tsc --rootDir ./src && npm pack",
     "build:transforms": "npm run build:transforms:angular && npm run build:transforms:cssmodules && npm run build:transforms:es6 && npm run build:transforms:postcss",
     "build:transforms:angular": "npm --prefix transforms/angular run build",
