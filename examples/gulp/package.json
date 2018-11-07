@@ -1,6 +1,6 @@
 {
   "name": "foobar",
-  "version": "3.0.13",
+  "version": "4.0.0",
   "description": "Example project for running a sequence of gulp tasks, issue https://github.com/monounity/karma-typescript/issues/29",
   "author": "https://github.com/kubut",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "karma": "1.5.0",
     "karma-jasmine": "^1.0.2",
     "karma-nyan-reporter": "0.2.4",
-    "karma-typescript": "file:../../karma-typescript-3.0.13.tgz",
+    "karma-typescript": "file:../../karma-typescript-4.0.0.tgz",
     "karma-phantomjs-launcher": "1.0.2",
     "run-sequence": "1.2.2",
     "gulp": "3.9.1",

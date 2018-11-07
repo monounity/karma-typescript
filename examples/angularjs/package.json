@@ -1,7 +1,7 @@
 {
   "name": "karma-typescript-examples-angularjs",
-  "version": "3.0.13",
-  "description": "Example project for AngularJS 1.5",
+  "version": "4.0.0",
+  "description": "Example project for AngularJS 1.6",
   "author": "monounity",
   "contributors": [
     {
@@ -23,7 +23,7 @@
     "karma": "^3.1.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.0",
-    "karma-typescript": "file:../../karma-typescript-3.0.13.tgz",
+    "karma-typescript": "file:../../karma-typescript-4.0.0.tgz",
     "typescript": "latest"
   }
 }
