@@ -2,7 +2,7 @@
 
 [![Npm version](https://img.shields.io/npm/v/karma-typescript.svg)](https://www.npmjs.com/package/karma-typescript)
 [![Npmjs total downloads](https://img.shields.io/npm/dt/karma-typescript.svg)](https://www.npmjs.com/package/karma-typescript)
-[![Npmjs weekly downloads](https://img.shields.io/npm/dw/karma-typescript.svg)](https://www.npmjs.com/package/karma-typescript)
+[![Npmjs monthly downloads](https://img.shields.io/npm/dm/karma-typescript.svg)](https://www.npmjs.com/package/karma-typescript)
 [![Travis build status](https://travis-ci.org/monounity/karma-typescript.svg?branch=master)](https://travis-ci.org/monounity/karma-typescript)
 [![Appveyor build status](https://ci.appveyor.com/api/projects/status/00jpjueuxw4auaqb/branch/master?svg=true)](https://ci.appveyor.com/project/monounity/karma-typescript/branch/master)
 
@@ -10,7 +10,7 @@
 
 * Run unit tests written in Typescript with full type checking, seamlessly without extra build steps or scripts.
 * Get remapped test coverage with [karma-coverage](https://github.com/karma-runner/karma-coverage) and [Istanbul](https://github.com/gotwarlost/istanbul).
-* Use plain Typescript or a framework: Angular2, AngularJS, React, Sinon, any framework of choice.
+* Use plain Typescript or a framework: Angular, AngularJS, React, Sinon, any framework of choice.
 
 ## Installation
 
@@ -19,8 +19,8 @@ The easiest way is to keep `karma-typescript` as a devDependency in `package.jso
 ```json
 {
   "devDependencies": {
-    "karma": "^2.0.0",
-    "karma-typescript": "3.0.13"
+    "karma": "^3.0.0",
+    "karma-typescript": "^4.0.0"
   }
 }
 ```
@@ -59,7 +59,7 @@ The above example will compile all Typescript files and run the unit tests, prod
 
 ### Frameworks and Integrations
 
-- [Angular2](https://github.com/monounity/karma-typescript/tree/master/examples/angular2)
+- [Angular](https://github.com/monounity/karma-typescript/tree/master/examples/angular)
 - [AngularJS](https://github.com/monounity/karma-typescript/tree/master/examples/angularjs)
 - [Docker](https://github.com/monounity/karma-typescript/tree/master/examples/docker)
 - [Gulp](https://github.com/monounity/karma-typescript/tree/master/examples/gulp)
@@ -76,16 +76,16 @@ The above example will compile all Typescript files and run the unit tests, prod
 - [Hybrid app, code in JavaScript and tests in Typescript](https://github.com/adrianmarinica/karma-typescript-angularjs-sample)
 
 ## Transforms:
-- [karma-typescript-angular2-transform](https://github.com/monounity/karma-typescript-angular2-transform)
-- [karma-typescript-cssmodules-transform](https://github.com/monounity/karma-typescript-cssmodules-transform)
-- [karma-typescript-es6-transform](https://github.com/monounity/karma-typescript-es6-transform)
-- [karma-typescript-postcss-transform](https://github.com/monounity/karma-typescript-postcss-transform)
+- [karma-typescript-angular-transform](https://github.com/monounity/karma-typescript/transforms/angular)
+- [karma-typescript-cssmodules-transform](https://github.com/monounity/karma-typescript/transforms/cssmodules)
+- [karma-typescript-es6-transform](https://github.com/monounity/karma-typescript/transforms/es6)
+- [karma-typescript-postcss-transform](https://github.com/monounity/karma-typescript/transforms/postcss)
 
 ### Example output
 
 <img src="http://i.imgur.com/sc4Mswh.png" width="580" height="280" />
 
-- [Angular2 screenshot](https://github.com/monounity/karma-typescript/blob/master/assets/angular2.png)
+- [Angular screenshot](https://github.com/monounity/karma-typescript/blob/master/assets/angular.png)
 - [React screenshot](https://github.com/monounity/karma-typescript/blob/master/assets/react.png)
 
 ## Advanced configuration
