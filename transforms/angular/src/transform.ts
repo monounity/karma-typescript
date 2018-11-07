@@ -66,7 +66,7 @@ const initialize: kt.TransformInitialize = (logOptions: kt.TransformInitializeLo
             }
         }
     });
-    log = log4js.getLogger("angular-transform.karma-typescript");
+    log = log4js.getLogger("angular2-transform.karma-typescript");
 };
 
 const exp = Object.assign(transform, { initialize });
