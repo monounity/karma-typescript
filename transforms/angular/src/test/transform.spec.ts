@@ -1,10 +1,10 @@
 import * as fs from "fs";
-import * as kt from "../../../..";
 import * as log4js from "log4js";
 import * as path from "path";
 import * as sinon from "sinon";
 import * as test from "tape";
 import * as ts from "typescript";
+import * as kt from "../../../..";
 
 import * as transform from "../transform";
 
@@ -30,7 +30,7 @@ const configureSpy = sinon.spy(log4js, "configure");
 
 transform.initialize(logOptions);
 
-const compile = (filename: string): ts.SourceFile => {
+const compile = (file: string): ts.SourceFile => {
     const options: ts.CompilerOptions = {
         experimentalDecorators: true,
         lib: [
@@ -41,7 +41,7 @@ const compile = (filename: string): ts.SourceFile => {
         ]
     };
     const host = ts.createCompilerHost(options);
-    const program = ts.createProgram([filename], options, host);
+    const program = ts.createProgram([file], options, host);
     // tslint:disable-next-line: no-console
     console.log(ts.formatDiagnostics(ts.getPreEmitDiagnostics(program), host));
     host.writeFile = (name, text) => {
@@ -49,7 +49,7 @@ const compile = (filename: string): ts.SourceFile => {
         return name; // shut up, ts
     };
     program.emit();
-    return program.getSourceFile(filename);
+    return program.getSourceFile(file);
 };
 
 let filename = path.join(process.cwd(), "./src/test/mock-component.ts");
@@ -85,7 +85,7 @@ test("transformer should initialize log appenders", (t) => {
 });
 
 test("transformer should initialize log category", (t) => {
-    t.deepEqual(getLoggerSpy.args[0][0], "angular-transform.karma-typescript");
+    t.deepEqual(getLoggerSpy.args[0][0], "angular2-transform.karma-typescript");
     t.end();
 });
 
