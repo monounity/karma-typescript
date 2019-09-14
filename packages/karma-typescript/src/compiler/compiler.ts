@@ -18,14 +18,13 @@ interface Queued {
 
 export class Compiler {
 
-    private cachedProgram: ts.Program;
     private compiledFiles: CompiledFiles = {};
     private compilerHost: ts.CompilerHost;
     private emitQueue: Queued[] = [];
     private errors: string[] = [];
     private hostGetSourceFile: (filename: string, languageVersion: ts.ScriptTarget,
                                 onError?: (message: string) => void) => ts.SourceFile;
-    private program: ts.Program;
+    private program: ts.BuilderProgram;
 
     private compileDeferred: () => void;
 
@@ -61,29 +60,21 @@ export class Compiler {
 
         this.outputDiagnostics(tsconfig.errors);
 
-        if (+ts.version[0] >= 3) {
-            this.program = ts.createProgram({
-                host: this.compilerHost,
-                options: tsconfig.options,
-                projectReferences: tsconfig.projectReferences,
-                rootNames: tsconfig.fileNames
-            });
-        }
-        else {
-            this.program = ts.createProgram(tsconfig.fileNames, tsconfig.options, this.compilerHost);
-        }
+        this.program = ts.createIncrementalProgram({
+            host: this.compilerHost,
+            options: tsconfig.options,
+            projectReferences: tsconfig.projectReferences,
+            rootNames: tsconfig.fileNames
+        });
 
-        this.cachedProgram = this.program;
-
-        this.runDiagnostics(this.program, this.compilerHost);
+        this.runDiagnostics(this.program.getProgram(), this.compilerHost);
         this.program.emit();
         this.log.info("Compiled %s files in %s ms.", tsconfig.fileNames.length, benchmark.elapsed());
         this.onProgramCompiled();
     }
 
     private setupRecompile(): void {
-        this.cachedProgram = undefined;
-        this.compilerHost = ts.createCompilerHost(this.project.getTsconfig().options);
+        this.compilerHost = ts.createIncrementalCompilerHost(this.project.getTsconfig().options);
         this.hostGetSourceFile = this.compilerHost.getSourceFile;
         this.compilerHost.getSourceFile = this.getSourceFile;
         this.compilerHost.writeFile = (filename, text) => {
@@ -123,23 +114,7 @@ export class Compiler {
         languageVersion: ts.ScriptTarget,
         onError?: (message: string) => void): ts.SourceFile => {
 
-        if (this.cachedProgram && !this.isQueued(filename)) {
-            const sourceFile = this.cachedProgram.getSourceFile(filename);
-            if (sourceFile) {
-                return sourceFile;
-            }
-        }
-
         return this.hostGetSourceFile(filename, languageVersion, onError);
-    }
-
-    private isQueued(filename: string): boolean {
-        for (const queued of this.emitQueue) {
-            if (queued.file.originalPath === filename) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private runDiagnostics(program: ts.Program, host: ts.CompilerHost): void {
@@ -160,25 +135,7 @@ export class Compiler {
                 this.errors.push(diagnostic.file.fileName);
             }
 
-            if (ts.formatDiagnostics && host) { // v1.8+
-                this.log.error(ts.formatDiagnostics([diagnostic], host));
-            }
-            else { // v1.6, v1.7
-
-                let output = "";
-
-                if (diagnostic.file) {
-                    const loc = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
-                    output += diagnostic.file.fileName.replace(process.cwd(), "") +
-                                  "(" + (loc.line + 1) + "," + (loc.character + 1) + "): ";
-                }
-
-                const category = ts.DiagnosticCategory[diagnostic.category].toLowerCase();
-                output += category + " TS" + diagnostic.code + ": " +
-                              ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine) + ts.sys.newLine;
-
-                this.log.error(output);
-            }
+            this.log.error(ts.formatDiagnostics([diagnostic], host));
         });
 
         if (this.project.getTsconfig().options.noEmitOnError) {
