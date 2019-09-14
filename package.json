@@ -11,7 +11,7 @@
     "build": "lerna run build",
     "lint": "lerna run lint",
     "test": "lerna run test",
-    "test:examples": "npm run test:examples:angular && npm run test:examples:typescript-latest",
+    "test:examples": "npm run test:examples:angular && npm run test:examples:typescript-1.6.2 && npm run test:examples:typescript-1.8.10 && npm run test:examples:typescript-latest",
     "test:examples:angular": "npm --prefix examples/angular2/ test",
     "test:examples:typescript-1.6.2": "npm --prefix examples/typescript-1.6.2/ test",
     "test:examples:typescript-1.8.10": "npm --prefix examples/typescript-1.8.10/ test",

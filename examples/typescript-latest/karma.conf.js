@@ -13,6 +13,10 @@ module.exports = function(config) {
 
         reporters: ["dots", "karma-typescript"],
 
+        karmaTypescriptConfig: {
+            tsconfig: "./tsconfig.json"
+        },
+
         browsers: ["ChromeHeadless"],
 
         singleRun: true

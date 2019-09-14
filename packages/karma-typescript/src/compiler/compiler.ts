@@ -24,9 +24,10 @@ export class Compiler {
     private errors: string[] = [];
     private hostGetSourceFile: (filename: string, languageVersion: ts.ScriptTarget,
                                 onError?: (message: string) => void) => ts.SourceFile;
-    private program: ts.BuilderProgram;
-
     private compileDeferred: () => void;
+
+    private program: ts.Program;
+    private cachedProgram: ts.Program;
 
     constructor(private config: Configuration, private log: Logger, private project: Project) {
         config.whenReady(() => {
@@ -60,21 +61,53 @@ export class Compiler {
 
         this.outputDiagnostics(tsconfig.errors);
 
-        this.program = ts.createIncrementalProgram({
+        if (tsconfig.options.incremental) {
+            this.performIncrementalCompilation(tsconfig, benchmark);
+        }
+        else {
+            this.performCachedCompilation(tsconfig, benchmark);
+        }
+    }
+
+    private performIncrementalCompilation(tsconfig: ts.ParsedCommandLine, benchmark: Benchmark) {
+        this.log.warn("Performing incremental compilation");
+        const builderProgram = ts.createIncrementalProgram({
             host: this.compilerHost,
             options: tsconfig.options,
             projectReferences: tsconfig.projectReferences,
             rootNames: tsconfig.fileNames
         });
+        this.runDiagnostics(builderProgram.getProgram(), this.compilerHost);
+        builderProgram.emit();
+        this.log.info("Compiled %s files in %s ms.", tsconfig.fileNames.length, benchmark.elapsed());
+        this.onProgramCompiled(builderProgram.getProgram());
+    }
 
-        this.runDiagnostics(this.program.getProgram(), this.compilerHost);
+    private performCachedCompilation(tsconfig: ts.ParsedCommandLine, benchmark: Benchmark) {
+        if (+ts.version[0] >= 3) {
+            this.program = ts.createProgram({
+                host: this.compilerHost,
+                options: tsconfig.options,
+                projectReferences: tsconfig.projectReferences,
+                rootNames: tsconfig.fileNames
+            });
+        }
+        else {
+            this.program = ts.createProgram(tsconfig.fileNames, tsconfig.options, this.compilerHost);
+        }
+        this.cachedProgram = this.program;
+        this.runDiagnostics(this.program, this.compilerHost);
         this.program.emit();
         this.log.info("Compiled %s files in %s ms.", tsconfig.fileNames.length, benchmark.elapsed());
-        this.onProgramCompiled();
+        this.onProgramCompiled(this.program);
     }
 
     private setupRecompile(): void {
-        this.compilerHost = ts.createIncrementalCompilerHost(this.project.getTsconfig().options);
+        const tsconfig = this.project.getTsconfig();
+        this.cachedProgram = undefined;
+        this.compilerHost = tsconfig.options.incremental ?
+            ts.createIncrementalCompilerHost(tsconfig.options) :
+            ts.createCompilerHost(tsconfig.options);
         this.hostGetSourceFile = this.compilerHost.getSourceFile;
         this.compilerHost.getSourceFile = this.getSourceFile;
         this.compilerHost.writeFile = (filename, text) => {
@@ -82,11 +115,11 @@ export class Compiler {
         };
     }
 
-    private onProgramCompiled(): void {
+    private onProgramCompiled(program: ts.Program): void {
 
         this.emitQueue.forEach((queued) => {
 
-            const sourceFile = this.program.getSourceFile(queued.file.originalPath);
+            const sourceFile = program.getSourceFile(queued.file.originalPath);
 
             if (!sourceFile) {
                 throw new Error("No source found for " + queued.file.originalPath + "!\n" +
@@ -114,7 +147,23 @@ export class Compiler {
         languageVersion: ts.ScriptTarget,
         onError?: (message: string) => void): ts.SourceFile => {
 
+        if (this.cachedProgram && !this.isQueued(filename)) {
+            const sourceFile = this.cachedProgram.getSourceFile(filename);
+            if (sourceFile) {
+                return sourceFile;
+            }
+        }
+
         return this.hostGetSourceFile(filename, languageVersion, onError);
+    }
+
+    private isQueued(filename: string): boolean {
+        for (const queued of this.emitQueue) {
+            if (queued.file.originalPath === filename) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private runDiagnostics(program: ts.Program, host: ts.CompilerHost): void {
@@ -135,7 +184,25 @@ export class Compiler {
                 this.errors.push(diagnostic.file.fileName);
             }
 
-            this.log.error(ts.formatDiagnostics([diagnostic], host));
+            if (ts.formatDiagnostics && host) { // v1.8+
+                this.log.error(ts.formatDiagnostics([diagnostic], host));
+            }
+            else { // v1.6, v1.7
+
+                let output = "";
+
+                if (diagnostic.file) {
+                    const loc = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
+                    output += diagnostic.file.fileName.replace(process.cwd(), "") +
+                                  "(" + (loc.line + 1) + "," + (loc.character + 1) + "): ";
+                }
+
+                const category = ts.DiagnosticCategory[diagnostic.category].toLowerCase();
+                output += category + " TS" + diagnostic.code + ": " +
+                              ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine) + ts.sys.newLine;
+
+                this.log.error(output);
+            }
         });
 
         if (this.project.getTsconfig().options.noEmitOnError) {

@@ -1,6 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "incremental": true,
         "module": "commonjs",
         "noImplicitAny": true,
         "outDir": "tmp",
