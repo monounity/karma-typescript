@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "commonjs",
+        "baseUrl": ".",
+        "paths": {
+            "compilerpaths/*": [ "src/typescript/compiler-paths/*" ],
+            "karma-typescript-test-module-add": [ "node_modules/karma-typescript-test-module/add/index.js" ],
+            "@karma-typescript-test-module/*": [ "node_modules/karma-typescript-test-module/*" ]
+        },
+        "types": [
+            "jasmine",
+            "node"
+        ]
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
