@@ -26,3 +26,5 @@ for (const package of packages) {
 }
 
 fse.copySync("tests/integration-latest/karma-typescript-test-module/", "tests/integration-latest/node_modules/karma-typescript-test-module/");
+fse.copySync("tests/integration-latest/karma-typescript-test-module-commonjs-a/", "tests/integration-latest/node_modules/karma-typescript-test-module-commonjs-a/");
+fse.copySync("tests/integration-latest/karma-typescript-test-module-commonjs-b/", "tests/integration-latest/node_modules/karma-typescript-test-module-commonjs-b/");

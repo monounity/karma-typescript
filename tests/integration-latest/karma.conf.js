@@ -4,11 +4,12 @@ module.exports = function(config) {
         frameworks: ["jasmine", "karma-typescript"],
 
         files: [
-            { pattern: "src/**/*.ts" }
+            { pattern: "src/**/*.ts" },
+            { pattern: "src/resolve-typings/js-lib.js" }
         ],
 
         preprocessors: {
-            "src/**/*.+(js|ts|tsx)": ["karma-typescript"]
+            "src/**/*.+(js|ts)": ["karma-typescript"]
         },
 
         karmaTypescriptConfig: {
@@ -20,11 +21,28 @@ module.exports = function(config) {
                         "VARIABLE": "value"
                     }
                 },
+                entrypoints: /\.spec\.(ts|tsx)$/,
+                exclude: [
+                    "karma-typescript-test-module/excluded"
+                ],
+                ignore: ["karma-typescript-test-module/ignored"],
+                noParse: ["karma-typescript-test-module/no-parse"],
                 resolve: {
                     alias: {
                         "kttm-add-alias": "node_modules/karma-typescript-test-module/add/index.js"
                     }
                 },
+                transforms: [
+                    require("karma-typescript-cssmodules-transform")({}, {}, /style-import-tester\.css$/),
+                    require("karma-typescript-es6-transform")({presets: [["@babel/preset-env"]]}),
+                    function(context, callback) {
+                        if(context.ts && context.module.endsWith("es6-transform-tester.ts")) {
+                            context.ts.transpiled = "\n/* istanbul ignore next */\n" + context.ts.transpiled;
+                            return callback(undefined, true, false);
+                        }
+                        return callback(undefined, false);
+                    }
+                ]
             },
             tsconfig: "./tsconfig.json",
         },

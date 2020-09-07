@@ -4,6 +4,11 @@ describe("ModuleImportTester", () => {
 
     const tester = new ModuleImportTester();
 
+    it("should import default module", () => {
+
+        expect(tester.testImportDefaultModule()).toEqual(3);
+    });
+
     it("should import module", () => {
 
         expect(tester.testImportModule()).toEqual(3);
