@@ -51,7 +51,7 @@
     "generic-names": "^2.0.1",
     "karma-typescript": "5.5.1",
     "nyc": "^15.1.0",
-    "postcss": "^7.0.32",
+    "postcss": "^8.2.10",
     "postcss-modules-extract-imports": "^2.0.0",
     "postcss-modules-local-by-default": "^3.0.3",
     "postcss-modules-scope": "^2.2.0",
