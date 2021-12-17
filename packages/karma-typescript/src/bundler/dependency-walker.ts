@@ -30,6 +30,15 @@ export class DependencyWalker {
 
         let dependencyCount = 0;
         const ambientModuleNames = this.collectAmbientModules(queue);
+        // check resolved modules map for TS >= 4.5.1
+        const isTS45Map = function (map: any) {
+            return typeof map.get === "function" &&
+                typeof map.set === "function" &&
+                typeof map.delete === "function" &&
+                typeof map.has === "function" &&
+                typeof map.forEach === "function" &&
+                typeof map.size === "function";
+        }
 
         queue.forEach((queued) => {
 
@@ -39,7 +48,7 @@ export class DependencyWalker {
 
             if (resolvedModules && !queued.emitOutput.isDeclarationFile) {
 
-                if (lodash.isMap(resolvedModules)) { // Typescript 2.2+
+                if (isTS45Map(resolvedModules) || lodash.isMap(resolvedModules)) { // Typescript 2.2+
                     resolvedModules.forEach((resolvedModule: any, moduleName: string) => {
                         this.addBundleItem(queued, resolvedModule, moduleName, ambientModuleNames);
                     });
