@@ -22,7 +22,7 @@
     "karma-cli": "^2.0.0",
     "karma-mocha": "^1.3.0",
     "karma-typescript": "latest",
-    "mocha": "^6.2.0",
+    "mocha": "^10.2.0",
     "typescript": "latest"
   }
 }
