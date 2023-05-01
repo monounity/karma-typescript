@@ -158,6 +158,6 @@
   },
   "peerDependencies": {
     "karma": "1 || 2 || 3 || 4 || 5 || 6",
-    "typescript": "1 || 2 || 3 || 4"
+    "typescript": "1 || 2 || 3 || 4 || 5"
   }
 }
