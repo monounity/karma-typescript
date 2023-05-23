@@ -2,8 +2,15 @@
 
 <a href="https://www.npmjs.com/package/karma-typescript"><img alt="Npm Total Downloads" src="https://img.shields.io/npm/dt/karma-typescript.svg"></a>
 <a href="https://www.npmjs.com/package/karma-typescript"><img alt="Npm Monthly Downloads" src="https://img.shields.io/npm/dm/karma-typescript.svg"></a>
-<a href="https://travis-ci.org/monounity/karma-typescript"><img alt="Travis Status" src="https://img.shields.io/travis/monounity/karma-typescript/master.svg?label=travis"></a>
-<a href="https://ci.appveyor.com/project/monounity/karma-typescript"><img alt="Appveyor Status" src="https://img.shields.io/appveyor/ci/monounity/karma-typescript/master.svg?label=appveyor"></a>
+
+# Deprecated
+Karma has been deprecated and is not accepting new features or general bug fixes.
+
+This means that this plugin is also deprecated.
+
+For alternatives and rationale, please see https://github.com/karma-runner/karma#karma-is-deprecated-and-is-not-accepting-new-features-or-general-bug-fixes.
+
+I would like to give a huge shoutout to all of you who have contributed with PR:s and comments, you've helped keeping this plugin alive for far more years than I ever thought would be possible.
 
 > Karma :heart: Typescript
 
