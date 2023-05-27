@@ -114,11 +114,11 @@ If the defaults aren't enough, the settings can be configured from `karma.conf.j
   Defaults to `true`.
   
 * **karmaTypescriptConfig.bundlerOptions.acornOptions** - An object literal with keys/values which are passed as configuration 
-  options to the [Acorn](https://github.com/acornjs/acorn) parser used by the bundler.  The most notable of these keys is
-  `ecmaScript` which sets the ECMAScript target used by the parser.  If code has dependencies that use a newer version of 
+  options to the [Acorn](https://github.com/acornjs/acorn) parser used by the bundler. The most notable of these keys is
+  `ecmaVersion` which sets the ECMAScript target used by the parser. If code has dependencies that use a newer version of 
   ECMAScript than the bundler defaults to (ES5), parsing errors will result when the source-reader tries to bundle dependencies 
   (e.g. dependencies that use `bigint` literals like `1n` will cause an error during code compilation unless this option is 
-  explicitly set to 11(ES2020).  A complete list of options can be found in the [Acorn documentation](https://github.com/acornjs/acorn/tree/master/acorn#interface). 
+  explicitly set to `11` (ES2020). A complete list of options can be found in the [Acorn documentation](https://github.com/acornjs/acorn/tree/master/acorn#interface). 
 
 * **karmaTypescriptConfig.bundlerOptions.constants** - An object literal with keys/values which will be available as global
   variables in the bundle. The keys are expected to be strings and any non-string value will be stringified with `JSON.stringify`.
