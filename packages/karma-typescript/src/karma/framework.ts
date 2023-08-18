@@ -40,7 +40,7 @@ export class Framework {
 
     private replacer(key: string, value: string) {
         if (key && typeof value === "function") {
-            return (value + "").substr(0, 100) + "...";
+            return (value + "").slice(0, 100) + "...";
         }
         return value;
     }
